@@ -9,10 +9,8 @@
 name: get_mrcmekong
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron: "0 0 1 * *"
 
 jobs: 
   autoscrape:
