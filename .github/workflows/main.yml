@@ -39,7 +39,7 @@ jobs:
         run: |
           git config --local user.email ly_ding@126.com
           git config --local user.name Otoliths
-          git add water_quality_data
+          git data
           git commit -am "GH ACTION mrcmekong $(date)"
           git push https://${{github.actor}}:${{secrets.MRCMEKONG}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
         #git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
