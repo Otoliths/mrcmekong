@@ -3,7 +3,7 @@ if (!requireNamespace("jsonlite", quietly = TRUE))
   install.packages("jsonlite",dependencies = T)
 station <- jsonlite::fromJSON("https://api.mrcmekong.org/api/v1/nrtm/station")
 result <- lapply(station$stationId, function(stationid){
-  fromJSON(paste0("https://api.mrcmekong.org/api/v1/nrtm/measurement/",stationid))
+  jsonlite::fromJSON(paste0("https://api.mrcmekong.org/api/v1/nrtm/measurement/",stationid))
 })
 
 if (!file.exists("data")){
