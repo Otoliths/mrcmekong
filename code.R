@@ -1,4 +1,5 @@
 #------------------------Custom get_occ function-------------
+message(Sys.time())
 if (!requireNamespace("jsonlite", quietly = TRUE))
   install.packages("jsonlite",dependencies = T)
 station <- jsonlite::fromJSON("https://api.mrcmekong.org/api/v1/nrtm/station")
@@ -11,3 +12,4 @@ if (!file.exists("data")){
 }
 path <- paste0("data/",as.POSIXlt(Sys.time(), "Asia/Shanghai"),".rds")
 saveRDS(result,path)
+message(Sys.time())
