@@ -1,0 +1,46 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# See https://github.com/r-lib/actions/tree/master/examples#readme for
+# additional example workflows available for the R community.
+
+name: get_mrcmekong
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs: 
+  autoscrape:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - uses: r-lib/actions/setup-r@master
+      - name: install dependencies
+        run: sudo apt-get install libcurl4-openssl-dev libgeos-dev libudunits2-dev
+
+    # Set-up R
+      - name: Install packages
+        run: |
+          R -e 'install.packages("jsonlite",dependencies = T)'
+        
+    # Run R script
+      - name: get_data
+        run: Rscript code.R
+      
+ # Add new files in data folder, commit along with other modified files, push
+      - name: push the mrcmekong to GitHub
+        run: |
+          git config --local user.email ly_ding@126.com
+          git config --local user.name Otoliths
+          git add water_quality_data
+          git commit -am "GH ACTION mrcmekong $(date)"
+          git push https://${{github.actor}}:${{secrets.MRCMEKONG}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+        #git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
+  
